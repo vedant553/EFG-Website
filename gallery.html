@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Gallery | Eight Fold Group</title>
+    <meta name="description" content="Explore Eight Fold Group portfolio of completed civil construction, landscaping, and interior projects across Maharashtra.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .gallery-hero{position:relative;min-height:52vh;display:flex;align-items:flex-end;overflow:hidden;padding-bottom:5rem;background-color:#0a0f1d}
+        .gallery-hero__bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;opacity:.22;animation:kenburns 30s infinite alternate}
+        .gallery-hero__overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,29,.98) 0%,rgba(10,15,29,.4) 100%)}
+        .gallery-hero__content{position:relative;z-index:2}
+        .gallery-hero__eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+
+        /* Minimal page header */
+        .gallery-page-header{padding:6rem 0 2rem;background:var(--white);border-bottom:1px solid var(--border-color)}
+        .gallery-page-header .section-tag{display:block;margin-bottom:.75rem}
+        .gallery-page-title{font-family:var(--font-heading);font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--text-dark);line-height:1.15}
+
+        .gallery-filters{padding:0;background:var(--white);border-bottom:1px solid var(--border-color);position:sticky;top:72px;z-index:100}
+        .filter-tabs{display:flex;gap:0;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none}
+        .filter-tabs::-webkit-scrollbar{display:none}
+        .filter-tab{flex-shrink:0;padding:1rem 1.75rem;font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all .3s ease;font-family:var(--font-body)}
+        .filter-tab:hover{color:var(--text-dark)}
+        .filter-tab.active{color:var(--accent-gold);border-bottom-color:var(--accent-gold)}
+
+        .gallery-count-banner{padding:1.25rem 0;background:#faf8f5;border-bottom:1px solid var(--border-color)}
+        .gallery-count-banner p{font-size:.85rem;color:var(--text-muted);font-family:var(--font-body)}
+        .gallery-count-banner span{color:var(--accent-gold);font-weight:600}
+
+        .gallery-section{padding:5rem 0 7rem;background:var(--white)}
+        .gallery-grid{columns:3;column-gap:1.25rem}
+        @media(max-width:1024px){.gallery-grid{columns:2}}
+        @media(max-width:640px){.gallery-grid{columns:1}}
+
+        .gallery-item{break-inside:avoid;margin-bottom:1.25rem;position:relative;overflow:hidden;cursor:pointer;border:1px solid rgba(201,164,77,.12);transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s ease}
+        .gallery-item:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(10,15,29,.18)}
+        .gallery-item.hidden{display:none}
+        .gallery-item img{width:100%;height:auto;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);filter:saturate(.9)}
+        .gallery-item:hover img{transform:scale(1.06);filter:saturate(1.1)}
+        .gallery-item__overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,29,.88) 0%,transparent 55%);opacity:0;transition:opacity .4s ease;display:flex;align-items:flex-end;padding:1.75rem}
+        .gallery-item:hover .gallery-item__overlay{opacity:1}
+        .gallery-item__meta{transform:translateY(12px);transition:transform .4s ease}
+        .gallery-item:hover .gallery-item__meta{transform:translateY(0)}
+        .gallery-item__title{font-family:var(--font-heading);font-size:1.2rem;font-weight:600;color:var(--text-light);line-height:1.3;margin-bottom:.3rem}
+        .gallery-item__tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--accent-gold);font-family:var(--font-body);font-weight:500}
+        .gallery-item__zoom{position:absolute;top:1.25rem;right:1.25rem;width:40px;height:40px;border-radius:50%;background:rgba(201,164,77,.9);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;opacity:0;transform:scale(.7);transition:all .35s ease}
+        .gallery-item:hover .gallery-item__zoom{opacity:1;transform:scale(1)}
+
+        .gallery-cta-strip{background:#0a0f1d;padding:5rem 0;text-align:center;border-top:1px solid rgba(201,164,77,.15)}
+        .gallery-cta-strip h2{font-family:var(--font-heading);font-size:clamp(2rem,4vw,3rem);color:var(--text-light);margin-bottom:1.25rem}
+        .gallery-cta-strip p{color:var(--text-muted);max-width:520px;margin:0 auto 2.5rem;line-height:1.7}
+
+        .lightbox{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(5,8,15,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+        .lightbox.open{display:flex;animation:lbFadeIn .3s ease}
+        @keyframes lbFadeIn{from{opacity:0}to{opacity:1}}
+        .lightbox__close{position:absolute;top:1.5rem;right:1.5rem;width:48px;height:48px;border-radius:50%;border:1px solid rgba(201,164,77,.4);background:transparent;color:var(--accent-gold);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s ease;z-index:2}
+        .lightbox__close:hover{background:var(--accent-gold);color:#fff}
+        .lightbox__nav{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:50%;border:1px solid rgba(201,164,77,.4);background:rgba(201,164,77,.1);color:var(--accent-gold);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s ease;z-index:2}
+        .lightbox__nav:hover{background:var(--accent-gold);color:#fff}
+        .lightbox__prev{left:1.5rem}
+        .lightbox__next{right:1.5rem}
+        .lightbox__content{position:relative;max-width:90vw;max-height:88vh;display:flex;flex-direction:column;align-items:center}
+        .lightbox__img{max-width:88vw;max-height:78vh;object-fit:contain;border:1px solid rgba(201,164,77,.2);box-shadow:0 40px 80px rgba(0,0,0,.6)}
+        .lightbox__caption{margin-top:1.25rem;text-align:center}
+        .lightbox__caption-title{font-family:var(--font-heading);font-size:1.4rem;color:var(--text-light);font-weight:600;margin-bottom:.25rem}
+        .lightbox__caption-tag{font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;color:var(--accent-gold)}
+        .lightbox__counter{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);font-size:.78rem;color:var(--text-muted);letter-spacing:.1em;font-family:var(--font-body)}
+    </style>
+</head>
+<body>
+
+<header class="header sticky" id="main-header">
+    <div class="container header-container">
+        <a href="index.html" class="logo" id="nav-logo">
+            <img src="assets/images/logo.png" alt="Eight Fold Group" style="height:40px;width:auto;display:block;">
+        </a>
+        <nav class="nav-menu" id="nav-menu">
+            <a href="index.html#home" class="nav-link">Home</a>
+            <a href="index.html#about" class="nav-link">About Us</a>
+            <a href="services.html" class="nav-link">Services</a>
+            <a href="gallery.html" class="nav-link active">Work Gallery</a>
+            <a href="index.html#clients" class="nav-link">Clients</a>
+            <a href="index.html#contact" class="nav-link nav-cta">Enquiry Now</a>
+        </nav>
+        <button class="mobile-nav-toggle" id="mobile-menu-btn" aria-label="Toggle Navigation Menu">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+    </div>
+</header>
+
+
+<div class="gallery-page-header">
+    <div class="container">
+        <span class="section-tag">Eight Fold Group &mdash; Completed Projects</span>
+        <h1 class="gallery-page-title">Work Gallery</h1>
+    </div>
+</div>
+
+
+<div class="gallery-filters">
+    <div class="container">
+        <div class="filter-tabs" id="filter-tabs" role="tablist">
+            <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">All Projects</button>
+            <button class="filter-tab" data-filter="residential" role="tab">Residential</button>
+            <button class="filter-tab" data-filter="commercial" role="tab">Commercial</button>
+            <button class="filter-tab" data-filter="education" role="tab">Education</button>
+            <button class="filter-tab" data-filter="hospitality" role="tab">Hospitality</button>
+        </div>
+    </div>
+</div>
+
+<div class="gallery-count-banner">
+    <div class="container">
+        <p>Showing <span id="gallery-count">10</span> of <span>10</span> projects</p>
+    </div>
+</div>
+
+<section class="gallery-section">
+    <div class="container">
+        <div class="gallery-grid" id="gallery-grid">
+
+            <div class="gallery-item" data-category="residential" data-title="Channel Residency CHS, Panvel" data-tag="Residential &middot; Civil Construction">
+                <img src="assets/Work Gallery/Channel Residency CHS Panvel.jpg" alt="Channel Residency CHS Panvel" loading="lazy">
+                <div class="gallery-item__overlay"><div class="gallery-item__meta"><div class="gallery-item__title">Channel Residency CHS</div><div class="gallery-item__tag">Residential &middot; Panvel</div></div></div>
+                <div class="gallery-item__zoom"><i class="fa-solid fa-expand"></i></div>
+            </div>
+
+            <div class="gallery-item" data-category="commercial" data-title="Orion Mall, Panvel" data-tag="Commercial &middot; Landscaping and Civil">
+                <img src="assets/Work Gallery/Orion Mall Panvel.jpg" alt="Orion Mall Panvel" loading="lazy">
+                <div class="gallery-item__overlay"><div class="gallery-item__meta"><div class="gallery-item__title">Orion Mall, Panvel</div><div class="gallery-item__tag">Commercial &middot; Landscaping</div></div></div>
+                <div class="gallery-item__zoom"><i class="fa-solid fa-expand"></i></div>
+            </div>
+
+            <div class="gallery-item" data-category="residential" data-title="Shree Krishna CHS, Sukhapur New Panvel" data-tag="Residential &middot; CHS Development">
+                <img src="assets/Work Gallery/Shree Krishna CHS Sukhapur New Panvel.jpg" alt="Shree Krishna CHS Sukhapur New Panvel" loading="lazy">
+                <div class="gallery-item__overlay"><div class="gallery-item__meta"><div class="gallery-item__title">Shree Krishna CHS</div><div class="gallery-item__tag">Residential &middot; New Panvel</div></div></div>
+                <div class="gallery-item__zoom"><i class="fa-solid fa-expand"></i></div>
+            </div>
+
+            <div class="gallery-item" data-category="education" data-title="JBCN School" data-tag="Education &middot; Institutional Construction">
+                <img src="assets/Work Gallery/JBCN School.jpeg.jpg" alt="JBCN School" loading="lazy">
+                <div class="gallery-item__overlay"><div class="gallery-item__meta"><div class="gallery-item__title">JBCN School</div><div class="gallery-item__tag">Education &middot; Institutional</div></div></div>
+                <div class="gallery-item__zoom"><i class="fa-solid fa-expand"></i></div>
+            </div>
+
+            <div class="gallery-item" data-category="residential" data-title="Shri Ridhi Siddhi CHS, Kalamboli" data-tag="Residential &middot; Society Renovation">
+                <img src="assets/Work Gallery/Shri Ridhi Siddhi CHS Kalamboli.avif" alt="Shri Ridhi Siddhi CHS Kalamboli" loading="lazy">
+                <div class="gallery-item__overlay"><div class="gallery-item__meta"><div class="gallery-item__title">Shri Ridhi Siddhi CHS</div><div class="gallery-item__tag">Residential &middot; Kalamboli</div></div></div>
+                <div class="gallery-item__zoom"><i class="fa-solid fa-expand"></i></div>
+            </div>
+
+            <div class="gallery-item" data-category="hospitality" data-title="Hotel Executive Inn" data-tag="Hospitality &middot; Interior and Civil">
+                <img src="assets/Work Gallery/Hotel Executive Inn.jpg" alt="Hotel Executive Inn" loading="lazy">
+                <div class="gallery-item__overlay"><div class="gallery-item__meta"><div class="gallery-item__title">Hotel Executive Inn</div><div class="gallery-item__tag">Hospitality &middot; Interior</div></div></div>
+                <div class="gallery-item__zoom"><i class="fa-solid fa-expand"></i></div>
+            </div>
+
+            <div class="gallery-item" data-category="commercial" data-title="Nerul Gymkhana" data-tag="Commercial &middot; Landscape and Infrastructure">
+                <img src="assets/Work Gallery/Nerul Gymkhana.jpeg.jpg" alt="Nerul Gymkhana" loading="lazy">
+                <div class="gallery-item__overlay"><div class="gallery-item__meta"><div class="gallery-item__title">Nerul Gymkhana</div><div class="gallery-item__tag">Commercial &middot; Landscape</div></div></div>
+                <div class="gallery-item__zoom"><i class="fa-solid fa-expand"></i></div>
+            </div>
+
+            <div class="gallery-item" data-category="education" data-title="Ryan International School" data-tag="Education &middot; Institutional Infrastructure">
+                <img src="assets/Work Gallery/Ryan International School.jpg" alt="Ryan International School" loading="lazy">
+                <div class="gallery-item__overlay"><div class="gallery-item__meta"><div class="gallery-item__title">Ryan International School</div><div class="gallery-item__tag">Education &middot; Institutional</div></div></div>
+                <div class="gallery-item__zoom"><i class="fa-solid fa-expand"></i></div>
+            </div>
+
+            <div class="gallery-item" data-category="residential" data-title="Prithvi Park, Sanpada" data-tag="Residential &middot; Premium Landscaping">
+                <img src="assets/Work Gallery/Prithvi Park Sanpada.avif" alt="Prithvi Park Sanpada" loading="lazy">
+                <div class="gallery-item__overlay"><div class="gallery-item__meta"><div class="gallery-item__title">Prithvi Park, Sanpada</div><div class="gallery-item__tag">Residential &middot; Landscaping</div></div></div>
+                <div class="gallery-item__zoom"><i class="fa-solid fa-expand"></i></div>
+            </div>
+
+            <div class="gallery-item" data-category="residential" data-title="Nimbeshwar Yamuna CHS" data-tag="Residential &middot; Civil and Finishing">
+                <img src="assets/Work Gallery/Nimbeshwar Yamuna CHS.jpg" alt="Nimbeshwar Yamuna CHS" loading="lazy">
+                <div class="gallery-item__overlay"><div class="gallery-item__meta"><div class="gallery-item__title">Nimbeshwar Yamuna CHS</div><div class="gallery-item__tag">Residential &middot; Civil</div></div></div>
+                <div class="gallery-item__zoom"><i class="fa-solid fa-expand"></i></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="gallery-cta-strip">
+    <div class="container">
+        <span class="section-tag" style="display:block;margin-bottom:1rem;">Start Your Project</span>
+        <h2>Ready to Build Something Extraordinary?</h2>
+        <p>Let's transform your vision into a landmark. Our team is ready to discuss your next project.</p>
+        <a href="index.html#contact" class="btn btn-primary">Send an Enquiry &nbsp;<i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container footer-top">
+        <div class="grid grid-3">
+            <div class="footer-col footer-about">
+                <a href="index.html" style="display:inline-block;margin-bottom:1.5rem;">
+                    <img src="assets/images/logo.png" alt="Eight Fold Group" style="height:48px;width:auto;display:block;">
+                </a>
+                <p class="footer-desc">A leading civil and landscape contractor with over two decades of engineering excellence, specializing in residential, industrial, and commercial developments across Maharashtra.</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-title">Explore Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#about">Our Company</a></li>
+                    <li><a href="services.html">Our Services</a></li>
+                    <li><a href="gallery.html">Work Gallery</a></li>
+                    <li><a href="index.html#clients">Our Clients</a></li>
+                    <li><a href="index.html#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-title">Get in Touch</h4>
+                <ul class="footer-contact">
+                    <li><i class="fa-solid fa-location-dot"></i> Panvel, Navi Mumbai, Maharashtra</li>
+                    <li><i class="fa-solid fa-phone"></i> <a href="tel:+919876543210">+91 98765 43210</a></li>
+                    <li><i class="fa-solid fa-envelope"></i> <a href="mailto:info@eightfoldgroup.com">info@eightfoldgroup.com</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <p class="footer-copy">&copy; 2025 Eight Fold Group. All Rights Reserved. Formerly Sushant Enterprises.</p>
+        </div>
+    </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox__close" id="lb-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    <button class="lightbox__nav lightbox__prev" id="lb-prev" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="lightbox__nav lightbox__next" id="lb-next" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="lightbox__content">
+        <img class="lightbox__img" id="lb-img" src="" alt="">
+        <div class="lightbox__caption">
+            <div class="lightbox__caption-title" id="lb-title"></div>
+            <div class="lightbox__caption-tag" id="lb-tag"></div>
+        </div>
+    </div>
+    <div class="lightbox__counter" id="lb-counter"></div>
+</div>
+
+<script>
+(function(){
+    var mbtn=document.getElementById('mobile-menu-btn'),nm=document.getElementById('nav-menu');
+    if(mbtn&&nm){mbtn.addEventListener('click',function(){nm.classList.toggle('open');mbtn.classList.toggle('active');var b=mbtn.querySelectorAll('.bar');if(mbtn.classList.contains('active')){b[0].style.transform='rotate(45deg) translate(5px,6px)';b[1].style.opacity='0';b[2].style.transform='rotate(-45deg) translate(5px,-6px)'}else{b[0].style.transform='none';b[1].style.opacity='1';b[2].style.transform='none'}})}
+
+    var tabs=document.querySelectorAll('.filter-tab'),items=document.querySelectorAll('.gallery-item'),countEl=document.getElementById('gallery-count');
+    tabs.forEach(function(tab){tab.addEventListener('click',function(){tabs.forEach(function(t){t.classList.remove('active');t.setAttribute('aria-selected','false')});tab.classList.add('active');tab.setAttribute('aria-selected','true');var f=tab.dataset.filter,v=0;items.forEach(function(item){var m=f==='all'||item.dataset.category===f;item.classList.toggle('hidden',!m);if(m)v++});countEl.textContent=v})});
+
+    var lb=document.getElementById('lightbox'),lbImg=document.getElementById('lb-img'),lbTitle=document.getElementById('lb-title'),lbTag=document.getElementById('lb-tag'),lbCounter=document.getElementById('lb-counter'),lbClose=document.getElementById('lb-close'),lbPrev=document.getElementById('lb-prev'),lbNext=document.getElementById('lb-next'),cur=0,vis=[];
+
+    function open(idx){vis=[...items].filter(function(i){return!i.classList.contains('hidden')});show(idx);lb.classList.add('open');document.body.style.overflow='hidden'}
+    function close(){lb.classList.remove('open');document.body.style.overflow=''}
+    function show(idx){var item=vis[idx];if(!item)return;lbImg.src=item.querySelector('img').src;lbImg.alt=item.querySelector('img').alt;lbTitle.textContent=item.dataset.title;lbTag.textContent=item.dataset.tag;lbCounter.textContent=(idx+1)+' / '+vis.length;cur=idx}
+
+    items.forEach(function(item){item.addEventListener('click',function(){vis=[...items].filter(function(i){return!i.classList.contains('hidden')});var idx=vis.indexOf(item);open(idx>=0?idx:0)})});
+    lbClose.addEventListener('click',close);
+    lb.addEventListener('click',function(e){if(e.target===lb)close()});
+    lbPrev.addEventListener('click',function(){show((cur-1+vis.length)%vis.length)});
+    lbNext.addEventListener('click',function(){show((cur+1)%vis.length)});
+    document.addEventListener('keydown',function(e){if(!lb.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show((cur-1+vis.length)%vis.length);if(e.key==='ArrowRight')show((cur+1)%vis.length)});
+})();
+</script>
+</body>
+</html>

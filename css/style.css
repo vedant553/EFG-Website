@@ -31,6 +31,7 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 90px;
     font-size: 16px;
 }
 
@@ -42,7 +43,12 @@ body {
     overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: var(--font-heading);
     color: var(--primary-navy);
     font-weight: 500;
@@ -82,8 +88,14 @@ img {
 }
 
 /* Helper Utilities */
-.text-center { text-align: center; }
-.text-light { color: var(--text-light) !important; }
+.text-center {
+    text-align: center;
+}
+
+.text-light {
+    color: var(--text-light) !important;
+}
+
 .section-tag {
     display: inline-block;
     font-family: var(--font-body);
@@ -239,11 +251,13 @@ img {
     transition: var(--transition-smooth);
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover,
+.nav-link.active {
     color: #000000;
 }
 
-.nav-link:hover::after, .nav-link.active::after {
+.nav-link:hover::after,
+.nav-link.active::after {
     width: 100%;
 }
 
@@ -323,8 +337,13 @@ img {
 }
 
 @keyframes kenburns {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.15); }
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.15);
+    }
 }
 
 .hero-content-wrapper {
@@ -404,8 +423,15 @@ img {
 }
 
 @keyframes scroll-wheel {
-    0% { top: 6px; opacity: 1; }
-    100% { top: 18px; opacity: 0; }
+    0% {
+        top: 6px;
+        opacity: 1;
+    }
+
+    100% {
+        top: 18px;
+        opacity: 0;
+    }
 }
 
 .scroll-text {
@@ -964,8 +990,8 @@ img {
 }
 
 /* CSS rule for floating label trigger */
-.form-input:focus ~ .form-label,
-.form-input:not(:placeholder-shown) ~ .form-label {
+.form-input:focus~.form-label,
+.form-input:not(:placeholder-shown)~.form-label {
     top: -1.25rem;
     font-size: 0.75rem;
     color: var(--accent-gold);
@@ -1153,7 +1179,7 @@ img {
     html {
         font-size: 15px;
     }
-    
+
     .section-title {
         font-size: 2.75rem;
     }
@@ -1161,31 +1187,35 @@ img {
     .hero-title {
         font-size: 4rem;
     }
-    
+
     .contact-info-panel {
         padding-right: 0;
     }
-    
+
     .highlight-banner {
         padding: 4rem;
     }
-    
+
     .highlight-title {
         font-size: 2.75rem;
     }
 }
 
 @media (max-width: 768px) {
-    .grid-2, .grid-3 {
+
+    .grid-2,
+    .grid-3 {
         grid-template-columns: 1fr;
     }
 
     .header {
         padding: 1.25rem 0;
-        background-color: var(--primary-navy);
+        background-color: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
         border-bottom: 1px solid var(--border-color-light);
     }
-    
+
     .mobile-nav-toggle {
         display: flex;
     }
@@ -1196,7 +1226,9 @@ img {
         left: -100%;
         width: 100%;
         height: calc(100vh - 60px);
-        background-color: var(--primary-navy);
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
         flex-direction: column;
         justify-content: center;
         gap: 3rem;
@@ -1209,9 +1241,14 @@ img {
     .nav-menu.open {
         left: 0;
     }
-    
+
     .nav-link {
         font-size: 1.25rem;
+        color: var(--primary-navy);
+    }
+    
+    .nav-link:hover, .nav-link.active {
+        color: var(--accent-gold);
     }
 
     .hero-title {
@@ -1235,18 +1272,21 @@ img {
         display: none;
     }
 
-    .philosophy-section, .services-section, .testimonials-section, .contact-section {
+    .philosophy-section,
+    .services-section,
+    .testimonials-section,
+    .contact-section {
         padding: 6rem 0;
     }
-    
+
     .highlight-banner {
         padding: 3rem 2rem;
     }
-    
+
     .testimonial-content-card {
         padding: 3rem 2rem;
     }
-    
+
     .testimonial-slider {
         height: 420px;
     }
@@ -1266,12 +1306,12 @@ img {
     .hero-title {
         font-size: 2.5rem;
     }
-    
+
     .hero-buttons {
         flex-direction: column;
         gap: 1rem;
     }
-    
+
     .btn {
         width: 100%;
     }
@@ -1317,7 +1357,7 @@ img {
     background: #fff;
     padding: 40px 30px;
     border-radius: 4px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
     text-align: center;
     transition: all 0.4s ease;
     border: 1px solid #f0f0f0;
@@ -1326,7 +1366,7 @@ img {
 
 .ext-service-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
     border-bottom-color: #C9A44D;
 }
 
@@ -1421,7 +1461,8 @@ img {
     display: flex;
     align-items: center;
     gap: 5rem;
-    padding-right: 5rem; /* Ensures gap consistency with the duplicated block */
+    padding-right: 5rem;
+    /* Ensures gap consistency with the duplicated block */
 }
 
 .client-logo {
@@ -1443,6 +1484,7 @@ img {
     0% {
         transform: translateX(0);
     }
+
     100% {
         /* Move left by 50% of the track width (which holds two identical content blocks) */
         transform: translateX(-50%);
@@ -1453,24 +1495,33 @@ img {
    GLOBAL RESPONSIVE UTILITIES
    ========================================= */
 @media (max-width: 1024px) {
-    .grid-3, .grid-4 {
+
+    .grid-3,
+    .grid-4 {
         grid-template-columns: repeat(2, 1fr);
     }
+
     .section-title {
         font-size: 2.5rem;
     }
 }
 
 @media (max-width: 768px) {
-    .grid-2, .grid-3, .grid-4 {
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
         grid-template-columns: 1fr;
     }
+
     .section-title {
         font-size: 2rem;
     }
+
     .highlight-title {
         font-size: 2rem;
     }
+
     .footer-top .grid {
         grid-template-columns: 1fr;
     }
